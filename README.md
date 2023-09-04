@@ -1,2 +1,2 @@
-# MATD47_-_Met._Multivariados
-Repositório com as aulas práticas da disciplina MATD47 - Métodos Multivariados
+# MATD47_Labs
+Repositório com as aulas práticas da disciplina **MATD47 - Métodos Multivariados** em 2023.2.
