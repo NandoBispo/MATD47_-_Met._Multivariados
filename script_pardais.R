@@ -1,9 +1,16 @@
-#################################################################
+# PACOTES ----
 
 library(readxl)
-pardais <- read_excel("C:/MATD47_20232/aula2_pardais/R_pardais/pardais.xlsx")
+
+pacman::p_load(readxl,  janitor)
+
+# DADOS ----
+
+# pardais <- read_excel("C:/MATD47_20232/aula2_pardais/R_pardais/pardais.xlsx")
+pardais <- readxl::read_excel("pardais.xlsx")
 View(pardais)
 dados<-pardais
+
 #require(stats)
 
 #library(help="stats")
@@ -14,7 +21,26 @@ summary(dados[2:6])
 pairs(dados[2:6]) #ou
 plot(dados[2:6])
 
-#selecionando subconjuntos
+# _____________________________________________________________
+dados1=dados|>
+  janitor::clean_names()|>
+  dplyr::rename(
+    "comp_total"=x1, "ext_alar"=x2, "comp_bico_kbca"=x3, "comp_umero"=x4, "comp_quilha_esterno"=x5)
+
+dados1|>
+  dplyr::select(-passaro)|>
+  summarytools::descr(
+    stats = c("min", "q1", "med", "mean","q3", "max",  "sd"),
+    # round.digits = 3,
+    justify = "c",
+    style = "rmarkdown",
+    # headings = T,
+    # split.tables = 0.3,
+    transpose = T
+  )
+# _____________________________________________________________
+
+## Selecionando subconjuntos ----
 
 sobrev<-subset(dados, dados[1] <=21)
 sobrev
@@ -34,12 +60,13 @@ plot(dados[2:6])
 
 
 #gráfico de dispersão - por grupo
+
 plot(sobrev$X1, sobrev$X2,type = "p",xlab="comprimento total (mm)", ylab="extensão alar (mm)",
      xlim=c(150,170),ylim=c(225,255),main = "")
 points(n_sobrev$X1,n_sobrev$X2, col = "red")
 legend("topright", cex=0.4,c("Sobreviventes", "Não-sobreviventes"),text.col=c("black","red"))
 
-######################################
+# _____________________________________________________________
 
 #gráficos de perfis 
 
@@ -55,7 +82,7 @@ plot(sd_sob,type = "b",xlab="variáveis", ylab="desvio padrão",main = "",col = 
 lines(sd_Nsob,type = "b", col = "red")
 legend("topright", c("Sobreviventes", "Não-sobreviventes"),cex=0.4,text.col=c("green","red"))
 
-#BOXPLOT
+## BOXPLOT ----
 boxplot(as.data.frame(dados[2:6]))
 
 par(mfrow = c(2, 3))        
@@ -67,7 +94,7 @@ boxplot(dados$X3~dados$Sobrevivente)
 boxplot(dados$X4~dados$Sobrevivente)
 boxplot(dados$X5~dados$Sobrevivente)
 
-par(mfrow = c(1, 2))        
+par(mfrow = c(1, 2))
 
 boxplot(as.data.frame(sobrev[2:6]))
 boxplot(as.data.frame(n_sobrev[2:6]))
@@ -84,7 +111,7 @@ arrows(xi, mn.t - sd.t, xi, mn.t + sd.t,
        code = 3, col = "pink", angle = 75, length = .1)
 
 
-####################################################################################
+# _____________________________________________________________
 
 #gráfico de 3 dimensões
 require(lattice)
@@ -99,8 +126,9 @@ scatterplot3d(dados$X3,dados$X2,dados$X1)
 scatterplot3d(dados$X3,dados$X2,dados$X1,angle=80)
 scatterplot3d(dados$X3,dados$X2,dados$X1,angle=40,type='h')
 
-###############################################################################
-#Matriz de Covariância
+# _____________________________________________________________
+
+# Matriz de Covariância ----
 
 cor(dados[2:6], use = "all.obs",
     method = "pearson")              #paramétrico

@@ -1,8 +1,13 @@
 # _______________________________________________________________________
 
+if (!require(pacman)) install.packages("pacman")
+
+pacman::p_load(readxl, summarytools)
+
+
 library(readxl)
 # pardais <- read_excel("C:/MATD47_20232/aula2_pardais/R_pardais/pardais.xlsx")
-pardais <- read_excel("pardais.xlsx")
+pardais <- readxl::read_excel("pardais.xlsx")
 View(pardais)
 dados<-pardais
 #require(stats)
@@ -14,6 +19,20 @@ dados<-pardais
 summary(dados[2:6])
 graphics::pairs(dados[2:6]) # ou
 plot(dados[2:6])
+
+summarytools::st_options(lang = "pt")
+
+dados|>
+  dplyr::select(-Pássaro)|>
+  summarytools::descr(stats = c("min", "q1", "med", "mean","q3", "max",  "sd"), # , "cv", "Skewness", "Kurtosis"
+                    # round.digits = 3,
+                    justify = "c",
+                    style = "rmarkdown",
+                    # headings = T,
+                    # split.tables = 0.3,
+                    transpose = F
+)
+
 
 ## Selecionando subconjuntos ----
 
