@@ -1,8 +1,8 @@
 # PACOTES ----
+# library(readxl)
 
-library(readxl)
-
-pacman::p_load(readxl,  janitor)
+if (!require(pacman)) install.packages("pacman")
+pacman::p_load(readxl,  janitor, tidyverse)
 
 # DADOS ----
 
@@ -27,25 +27,27 @@ dados1=dados|>
   dplyr::rename(
     "comp_total"=x1, "ext_alar"=x2, "comp_bico_kbca"=x3, "comp_umero"=x4, "comp_quilha_esterno"=x5)
 
-dados1|>
-  dplyr::select(-passaro)|>
+# dados1|>
+#   dplyr::select(-passaro)|>
+  sobrev|>
   summarytools::descr(
     stats = c("min", "q1", "med", "mean","q3", "max",  "sd"),
     # round.digits = 3,
     justify = "c",
-    style = "rmarkdown",
-    # headings = T,
-    # split.tables = 0.3,
-    transpose = T
+    style = "rmarkdown", #"grid", #"jira", #"simple",
+    headings = F,
+    # split.tables = 1, 
+    rescale.weights = T,
+    transpose = F
   )
 # _____________________________________________________________
 
 ## Selecionando subconjuntos ----
 
-sobrev<-subset(dados, dados[1] <=21)
+sobrev<-base::subset(dados, dados[1]<=21)
 sobrev
 
-n_sobrev<-subset(dados, dados[1] >21)
+n_sobrev<-base::subset(dados, dados[1]>21)
 n_sobrev
 
 summary(sobrev[2:6])
@@ -59,7 +61,7 @@ pairs(~X1+X2+X3+X4+X5,data=dados)
 plot(dados[2:6])
 
 
-#gráfico de dispersão - por grupo
+### Gráfico de dispersão - por grupo ----
 
 plot(sobrev$X1, sobrev$X2,type = "p",xlab="comprimento total (mm)", ylab="extensão alar (mm)",
      xlim=c(150,170),ylim=c(225,255),main = "")
@@ -68,7 +70,7 @@ legend("topright", cex=0.4,c("Sobreviventes", "Não-sobreviventes"),text.col=c("
 
 # _____________________________________________________________
 
-#gráficos de perfis 
+## Gráficos de perfis ----
 
 media_sob<-apply(sobrev[2:6], 2,mean)
 media_Nsob<-apply(n_sobrev[2:6], 2,mean)
@@ -113,14 +115,14 @@ arrows(xi, mn.t - sd.t, xi, mn.t + sd.t,
 
 # _____________________________________________________________
 
-#gráfico de 3 dimensões
+## Gráfico de 3 dimensões ----
 require(lattice)
 cloud(dados$X3~dados$X2+dados$X1,xlab="extensão alar",ylab="comprimento total",zlab="comp do bico e da cabeça" )
 
 fator_sobre<-as.factor(dados$Sobrevivente)
 cloud(dados$X3~dados$X2+dados$X1,groups=fator_sobre,col=c("red","blue"),xlab="extensão alar",ylab="comprimento total",zlab="comp do bico e da cabeça" )
 
-#ar(mfrow = c(2, 2))
+par(mfrow = c(2, 2))
 require(scatterplot3d)
 scatterplot3d(dados$X3,dados$X2,dados$X1)
 scatterplot3d(dados$X3,dados$X2,dados$X1,angle=80)
@@ -140,33 +142,34 @@ cor(dados[2:6], use = "all.obs",
     method = "spearman")
 
 
-##### QQ plot
+### QQ plot ----
 par(mfrow = c(2, 3))  
 
 x1<-seq(-3,3,0.01)
 y1<-x1
 
-xx<- ( dados$X1-mean(dados$X1))/sqrt(var(dados$X1))
+# Padronização
+xx<-(dados$X1-mean(dados$X1))/sqrt(var(dados$X1))
 qqnorm(xx)
 lines(x1,y1,col="red")
 
-xx2<- ( dados$X2-mean(dados$X2))/sqrt(var(dados$X2))
+xx2<-(dados$X2-mean(dados$X2))/sqrt(var(dados$X2))
 qqnorm(xx2)
 lines(x1,y1,col="red")
 
-xx3<- ( dados$X3-mean(dados$X3))/sqrt(var(dados$X3))
+xx3<-(dados$X3-mean(dados$X3))/sqrt(var(dados$X3))
 qqnorm(xx3)
 lines(x1,y1,col="red")
 
-xx4<- ( dados$X4-mean(dados$X4))/sqrt(var(dados$X4))
+xx4<-(dados$X4-mean(dados$X4))/sqrt(var(dados$X4))
 qqnorm(xx4)
 lines(x1,y1,col="red")
 
-xx5<- ( dados$X5-mean(dados$X5))/sqrt(var(dados$X5))
+xx5<-(dados$X5-mean(dados$X5))/sqrt(var(dados$X5))
 qqnorm(xx5)
 lines(x1,y1,col="red")
 
-######### Testes de Hipóteses - comparação de médias
+# Testes de Hipóteses - comparação de médias ----
 
 t.test(X1 ~ Sobrevivente, data = dados)
 t.test(X2 ~ Sobrevivente, data = dados)
@@ -174,14 +177,14 @@ t.test(X3 ~ Sobrevivente, data = dados)
 t.test(X4 ~ Sobrevivente, data = dados)
 t.test(X5 ~ Sobrevivente, data = dados)
 
-####Normalidade Multivariada
+### Normalidade Multivariada ----
 
 require(mvnormalTest)
-mardia(dados[2:6])
-mvnTest(dados[2:6], B = 1000, pct = c(0.01, 0.99))
+mvnormalTest::mardia(dados[2:6])
+mvnormalTest::mvnTest(dados[2:6], B = 1000, pct = c(0.01, 0.99))
 
 
-##### Matriz de Correlações
+### Matriz de Correlações ----
 
 library(corrplot)
 res <- cor(dados[2:6],method="pearson") # Corr matrix
@@ -208,7 +211,7 @@ qgraph(corre, shape="circle",
        negCol="darkred", layout="groups", vsize=10)
 
 
-#####Estatistica T2 de Hotelling
+### Estatistica T2 de Hotelling ----
 require(DescTools) 
 #selecionando subconjuntos
 
