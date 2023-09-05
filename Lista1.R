@@ -11,21 +11,26 @@ ozonio=c(41, 36, 12, 18, 23, 29, 16, 11, 14, 18, 14, 34, 6, 30, 11, 1, 11, 4, 32
 
 quali_ar = base::cbind(i_rad_sol, v_vento, temp, ozonio)|>base::as.data.frame()
 
-quali_ar$i_rad_sol|>mean()
-
-mean(quali_ar)
+## Item a. ----
 
 base::apply(X = quali_ar, MARGIN =  2, FUN = mean)
+stats::cov(x = quali_ar, use = "all.obs", method = "pearson")|>round(2)
 
-stats::cor(x = quali_ar, use = "all.obs", method = "pearson")
-stats::cov(x = quali_ar, use = "all.obs", method = "pearson")
-
-
-
+## Item b. ----
+stats::cor(x = quali_ar, use = "all.obs", method = "pearson")|>round(2)
 
 
+## Item c. ----
 
+y1 = quali_ar$i_rad_sol*0.1 + quali_ar$ozonio
+y2 = quali_ar$v_vento*2 - quali_ar$temp*5
+y3 = quali_ar$v_vento*0.5 + quali_ar$v_vento*1.5 + quali_ar$temp - quali_ar$ozonio*2
+y4 = quali_ar$i_rad_sol/120 + quali_ar$v_vento/2.7 + quali_ar$temp/5 - quali_ar$ozonio/15.5
 
+Y = base::cbind(y1, y2, y3, y4)|>as.data.frame()
 
+stats::cov(x = Y, use = "all.obs", method = "pearson")|>round(2)
 
+stats::cor(x = Y, use = "all.obs", method = "pearson")|>round(2)
 
+# Questão 2 ----
