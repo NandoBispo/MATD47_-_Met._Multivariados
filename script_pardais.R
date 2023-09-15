@@ -7,7 +7,7 @@ pacman::p_load(readxl,  janitor, tidyverse)
 # DADOS ----
 
 # pardais <- read_excel("C:/MATD47_20232/aula2_pardais/R_pardais/pardais.xlsx")
-pardais <- readxl::read_excel("pardais.xlsx")
+pardais <- readxl::read_excel("dados/pardais.xlsx")
 View(pardais)
 dados<-pardais
 

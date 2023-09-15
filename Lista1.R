@@ -35,6 +35,7 @@ stats::cor(x = Y, use = "all.obs", method = "pearson")|>round(2)
 
 # Questão 2 ----
 
+# <<<<<<< HEAD
 m_cov = matrix(c(25, -2, 4, -2, 4, 1, 4, 1, 9), nrow = 3, ncol = 3)
 
 cor(m_cov)
@@ -50,6 +51,59 @@ ativos=c(173.297,169.893,83.219,77.734,128.344,39.08,38.528,51.038,34.715,25.636
 empresas=c("General Motors","Ford","Exxon","IBM","General Electric","Mobil","Philip Morris","Chrysler","du Pont","Texaco")
 
 dados=base::cbind(empresas,vendas,lucros,ativos)|>as.data.frame()
+# =======
+
+
+
+
+
+
+# Questão 3 ----
+
+
+
+
+
+
+
+
+
+# Questão 4 ----
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# Questão 5 ----
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# Questão 6 ----
+# >>>>>>> 4171076ebf0082c0a5eddc8f568349d32ffc70e3
 
 
 
@@ -68,6 +122,68 @@ dados=base::cbind(empresas,vendas,lucros,ativos)|>as.data.frame()
 
 
 
+# <<<<<<< HEAD
+# =======
+# Questão 7 ----
+
+
+
+
+
+
+
+
+
+
+
+# Questão 15 ----
+if (!require(pacman)) install.packages("pacman")
+pacman::p_load(readxl,  janitor, tidyverse)
+
+## Dados ----
+
+notas <- readxl::read_excel("dados/dados_notas_lista1.xlsx")
+View(notas)
+
+dados <- janitor::clean_names(notas)
+View(dados)
+
+
+# Pacotes para teste de T2 de Hotelling ______________________
+pacman::p_load(ICSNP,  rrcov, DescTools)
+
+ICSNP::HotellingsT2(dados, mu=c(500,50,30),test = "chi")
+ICSNP::HotellingsT2(dados, mu=c(500,50,30),test = "f")
+
+rrcov::T2.test(dados, method = "c",mu=c(500,50,30),conf.int=T)
+
+DescTools::HotellingsT2Test(dados,mu=c(500,50,30))
+# ____________________________________________________________
+
+# Obtendo o vetor de médias.
+media=apply(dados,2,mean) # O comando colMeans obtêm o mesmo resultado mais rapidamente.
+
+?colMeans
+media=base::colMeans(x=dados,na.rm = F) 
+
+media=matrix(media,3,1) # Transformando em vetor coluna.
+
+S=stats::cov(dados) # Matriz de covariancia amostral.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+>>>>>>> 4171076ebf0082c0a5eddc8f568349d32ffc70e3
 
 
 
