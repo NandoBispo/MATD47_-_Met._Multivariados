@@ -150,8 +150,9 @@ media=matrix(media,3,1) # Transformando em vetor coluna.
 
 S=stats::cov(dados) # Matriz de covariancia amostral.
 
+S^{-1}
 
-
+base::dim(dados)[1]
 
 
 
