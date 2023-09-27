@@ -20,9 +20,8 @@ usethis::use_git_config(# Seu nome
 # Gerando um token
 usethis::create_github_token()
 
-
+# Armazenando o token no local correto.
 gitcreds::gitcreds_set()
-
 
 # Abrindo o documento reviron para adicionar o token.
 usethis::edit_r_environ()
