@@ -35,6 +35,23 @@ stats::cor(x = Y, use = "all.obs", method = "pearson")|>round(2)
 
 # Questão 2 ----
 
+# <<<<<<< HEAD
+m_cov = matrix(c(25, -2, 4, -2, 4, 1, 4, 1, 9), nrow = 3, ncol = 3)
+
+cor(m_cov)
+
+
+# Questão 4 ----
+vendas=c(126.974,96.933,86.656,63.438,55.264,50.976,39.069,36.156,35.209,32.416)
+
+lucros=c(4.224,3.835,3.51,3.758,3.939,1.809,2.946,0.359,2.48,2.413)
+
+ativos=c(173.297,169.893,83.219,77.734,128.344,39.08,38.528,51.038,34.715,25.636)
+
+empresas=c("General Motors","Ford","Exxon","IBM","General Electric","Mobil","Philip Morris","Chrysler","du Pont","Texaco")
+
+dados=base::cbind(empresas,vendas,lucros,ativos)|>as.data.frame()
+# =======
 
 
 
@@ -86,6 +103,7 @@ stats::cor(x = Y, use = "all.obs", method = "pearson")|>round(2)
 
 
 # Questão 6 ----
+# >>>>>>> 4171076ebf0082c0a5eddc8f568349d32ffc70e3
 
 
 
@@ -104,6 +122,8 @@ stats::cor(x = Y, use = "all.obs", method = "pearson")|>round(2)
 
 
 
+# <<<<<<< HEAD
+# =======
 # Questão 7 ----
 
 
@@ -171,6 +191,7 @@ T2=n*t(medias-mu0)%*%solve(S^{-1})%*%(medias-mu0)
 
 
 
+>>>>>>> 4171076ebf0082c0a5eddc8f568349d32ffc70e3
 
 dchisq(.5,2)
 
