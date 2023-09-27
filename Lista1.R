@@ -172,7 +172,7 @@ T2=n*t(medias-mu0)%*%solve(S^{-1})%*%(medias-mu0)
 
 
 
-
+dchisq(.5,2)
 
 
 
