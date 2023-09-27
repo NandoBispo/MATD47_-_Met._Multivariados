@@ -22,6 +22,7 @@ usethis::create_github_token()
 
 # Armazenando o token no local correto.
 gitcreds::gitcreds_set()
+# https://analisemacro.com.br/data-science/conectando-git-github-e-rstudio-em-3-passos/
 
 # Abrindo o documento reviron para adicionar o token.
 usethis::edit_r_environ()
