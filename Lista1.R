@@ -139,22 +139,30 @@ rrcov::T2.test(dados, method = "c",mu=c(500,50,30),conf.int=T)
 
 DescTools::HotellingsT2Test(dados,mu=c(500,50,30))
 # ____________________________________________________________
+n=base::dim(dados)[1]
+p=base::dim(dados)[2]
 
-# Obtendo o vetor de médias.
-media=apply(dados,2,mean) # O comando colMeans obtêm o mesmo resultado mais rapidamente.
+# Obtendo o vetor de médias:
+# medias=apply(dados,2,mean) # O comando colMeans obtêm o mesmo resultado mais rapidamente.
 
 ?colMeans
-media=base::colMeans(x=dados,na.rm = F) 
-
-media=matrix(media,3,1) # Transformando em vetor coluna.
+medias=base::colMeans(x=dados,na.rm = F) 
+medias=matrix(media,3,1) # Transformando em vetor coluna.
 
 S=stats::cov(dados) # Matriz de covariancia amostral.
 
 S^{-1}
 
-base::dim(dados)[1]
 
 
+
+
+
+# Conferindo ----
+
+mu0=base::matrix(c(500,50,30),p,1)
+# %*% Operador para multiplicação de matriz.
+T2=n*t(medias-mu0)%*%solve(S^{-1})%*%(medias-mu0)
 
 
 
