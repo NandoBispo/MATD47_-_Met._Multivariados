@@ -70,6 +70,10 @@ qchisq(0.5,2)
 
 # Grafico
 plot(dist_order,perc, col="red", pch=19, ylab="q(i)", xlab="d(i)", main="Grafico dos pares")
+lines()
+
+
+x <- seq(0:5, 0.2)
 
 
   
