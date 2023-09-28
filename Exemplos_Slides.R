@@ -54,6 +54,7 @@ dist_order|>round(4)
 
 gl <- base::array(1:n, dim=c(n,1))
 perc <- base::array(1:n, dim=c(n,1))
+
 for (i in 1:n) {
   gl[i] <- (i-0.5)/n
   perc[i] <- stats::qchisq(gl[i],p)
@@ -68,7 +69,7 @@ qchisq(0.5,2)
 ### Item c ----
 
 # Grafico
-plot(dist_order,perc, col="red", pch=19, ylab="Quantis Qui-quadrado", xlab="Distâncias generalizadas ordenadas", main="Grafico dos pares")
+plot(dist_order,perc, col="red", pch=19, ylab="q(i)", xlab="d(i)", main="Grafico dos pares")
 
 
   
